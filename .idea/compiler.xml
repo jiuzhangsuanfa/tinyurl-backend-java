@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="shorturl" />
         <module name="url" />
+        <module name="shorturl" />
+        <module name="tinyurl-backend-java" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />
