@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
-    public Docket webApiConfig(){
+    public Docket webApiConfig() {
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("webApi")
@@ -29,13 +29,13 @@ public class SwaggerConfig {
     }
 
     // 基本信息的配置，信息会在api文档上显示
-    private ApiInfo webApiInfo(){
+    private ApiInfo webApiInfo() {
 
         return new ApiInfoBuilder()
                 .title("短网址")
                 .description("本文档描述了短网址中接口定义")
                 .version("1.0")
-                .contact(new Contact("Helen","http://wenzhen.com","649575218@qq.com"))
+                .contact(new Contact("Helen", "http://wenzhen.com", "649575218@qq.com"))
                 .build();
     }
 }

@@ -17,7 +17,7 @@ public class RedisService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    public void setLongAndShort(String longUrl, String shortUrl,long time) {
+    public void setLongAndShort(String longUrl, String shortUrl, long time) {
         redisTemplate.opsForValue().set(longUrl, shortUrl, time, TimeUnit.MINUTES);
         redisTemplate.opsForValue().set(shortUrl, longUrl, time, TimeUnit.MINUTES);
         //redisTemplate.opsForValue().set(shortUrl + "sum", 0, 60, TimeUnit.MINUTES);

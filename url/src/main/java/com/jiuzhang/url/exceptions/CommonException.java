@@ -1,4 +1,4 @@
-package com.jiuzhang.url.common;
+package com.jiuzhang.url.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class CommonException extends Exception{
+public class CommonException extends Exception {
 
     private Integer code;
 

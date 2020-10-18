@@ -36,18 +36,18 @@ public class ShortToLongController {
 
     /**
      * 重定向到原来长网址
+     *
      * @param shortUrl
      * @param request
      * @param response
      * @throws IOException
      */
     @RequestMapping("/{shortUrl}")
-    public void redirect(@PathVariable String shortUrl, HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void redirect(@PathVariable String shortUrl, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String longUrl = longToShortService.shortToLong(shortUrl);
-        if(longUrl == null) {
-            throw new NoSuchElementException("Cannot find long URL mapping to "+ shortUrl);
-        }
-        else {
+        if (longUrl == null) {
+            throw new NoSuchElementException("Cannot find long URL mapping to " + shortUrl);
+        } else {
             visitInfoService.setVisitInfo(shortUrl, request);
             response.sendRedirect(longUrl);
         }

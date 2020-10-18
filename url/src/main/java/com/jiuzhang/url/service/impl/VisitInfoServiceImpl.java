@@ -27,6 +27,7 @@ public class VisitInfoServiceImpl implements VisitInfoService {
 
     /**
      * 存放访客信息
+     *
      * @param shortUrl
      * @param request
      */
@@ -49,17 +50,19 @@ public class VisitInfoServiceImpl implements VisitInfoService {
 
     /**
      * 返回对应最近访问最多10条短网址长网址信息
+     *
      * @return
      */
     @Override
-    public List<LatestSumMax> getList(){
+    public List<LatestSumMax> getList() {
         List<Object[]> visitInfoObjs = visitInfoRepository.findLatestSumMax();
-        List<LatestSumMax> visitInfos = visitInfoObjs.stream().map(i-> new LatestSumMax((String)i[0], ((Number)i[1]).longValue())).collect(Collectors.toList());
+        List<LatestSumMax> visitInfos = visitInfoObjs.stream().map(i -> new LatestSumMax((String) i[0], ((Number) i[1]).longValue())).collect(Collectors.toList());
         return visitInfos;
     }
 
     /**
      * 返回对应最近访问10条访客记录
+     *
      * @return
      */
     @Override

@@ -1,22 +1,19 @@
 package com.jiuzhang.url.domain;
 
 
-import java.time.LocalDateTime;
-
-import java.io.Serializable;
-import java.util.Date;
-
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="VisitInfo", description="")
+@ApiModel(value = "VisitInfo", description = "")
 @Entity
-@Table(name="VISIT_INFO")
+@Table(name = "VISIT_INFO")
 public class VisitInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

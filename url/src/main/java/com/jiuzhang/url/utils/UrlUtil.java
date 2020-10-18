@@ -8,18 +8,10 @@ package com.jiuzhang.url.utils;
 public class UrlUtil {
 
     public static boolean isLongUrl(String url) {
-        if (!url.startsWith("http://localhost") && (url.startsWith("http://") || url.startsWith("https://"))) {
-            return true;
-        } else {
-            return false;
-        }
+        return !url.startsWith("http://localhost") && (url.startsWith("http://") || url.startsWith("https://"));
     }
 
     public static boolean isShortUrl(String url) {
-        if (url.startsWith("http://localhost:8080")) {
-            return true;
-        } else {
-            return false;
-        }
+        return url.startsWith("http://localhost:8080");
     }
 }
