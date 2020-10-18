@@ -1,6 +1,6 @@
 package com.jiuzhang.url.controller;
 
-import com.jiuzhang.url.annotation.Limit;
+import com.jiuzhang.url.annotation.TinyUrlRateLimiter;
 import com.jiuzhang.url.common.LimitType;
 import com.jiuzhang.url.domain.VisitInfo;
 import com.jiuzhang.url.service.VisitInfoService;
@@ -30,7 +30,7 @@ public class VisitInfoController {
      * 最常访问的10个短网址及对应长网址
      * @return
      */
-    @Limit(speed = 3000, count = 3000,limitType = LimitType.IP)
+    @TinyUrlRateLimiter(permitsPerSecond = 300, period = 5, permits = 300,limitType = LimitType.IP)
     @GetMapping("/countLatest")
     public List<LatestSumMax> latestSumMaxList(){
         List<LatestSumMax> list = visitInfoService.getList();
