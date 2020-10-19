@@ -1,6 +1,5 @@
 package com.jiuzhang.url.service;
 
-import com.jiuzhang.url.domain.LongToShort;
 import com.jiuzhang.url.vo.UrlVO;
 
 import javax.servlet.http.HttpServletRequest;

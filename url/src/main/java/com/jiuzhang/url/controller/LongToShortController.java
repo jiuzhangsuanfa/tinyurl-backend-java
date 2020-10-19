@@ -1,7 +1,7 @@
 package com.jiuzhang.url.controller;
 
-import com.jiuzhang.url.annotation.TinyUrlRateLimiter;
-import com.jiuzhang.url.common.LimitType;
+import com.jiuzhang.url.annotation.RateLimit;
+import com.jiuzhang.url.enums.LimitType;
 import com.jiuzhang.url.service.LongToShortService;
 import com.jiuzhang.url.vo.UrlVO;
 import io.swagger.annotations.Api;
@@ -26,15 +26,16 @@ public class LongToShortController {
 
     /**
      * transform接口
+     *
      * @param urlVo
      * @param request
      * @return json：{"url" : "http://www.baidu.com"}
      */
-    @TinyUrlRateLimiter(permitsPerSecond = 0.1, period = 1, permits = 1,limitType = LimitType.IP)
+    @RateLimit(permitsPerSecond = 0.1, period = 1, permits = 1, limitType = LimitType.IP)
     @PostMapping("/transform")
-    public UrlVO longTransfer(@RequestBody UrlVO urlVo, HttpServletRequest request){
+    public UrlVO longTransfer(@RequestBody UrlVO urlVo, HttpServletRequest request) {
         String Url = urlVo.getUrl();
-        UrlVO longToShort = longToShortService.transfer(Url,request);
+        UrlVO longToShort = longToShortService.transfer(Url, request);
         //return Result.ofSuccess(longToShort).setCode(200);
         return longToShort;
     }

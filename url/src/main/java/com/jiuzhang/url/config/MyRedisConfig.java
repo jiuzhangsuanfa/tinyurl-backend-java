@@ -74,6 +74,7 @@ public class MyRedisConfig {
 
     /**
      * lua脚本RedisTemplate配置
+     *
      * @param redisConnectionFactory
      * @return
      */

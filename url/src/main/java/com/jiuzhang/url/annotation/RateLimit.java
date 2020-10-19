@@ -1,15 +1,14 @@
 package com.jiuzhang.url.annotation;
 
-import com.jiuzhang.url.common.LimitType;
+import com.jiuzhang.url.enums.LimitType;
 
 import java.lang.annotation.*;
-import java.math.BigDecimal;
 
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface TinyUrlRateLimiter {
+public @interface RateLimit {
 
     String key() default "";
 
