@@ -3,6 +3,7 @@ package com.jiuzhang.url.aspect;
 import com.google.common.util.concurrent.RateLimiter;
 import com.jiuzhang.url.annotation.RateLimit;
 import com.jiuzhang.url.enums.LimitType;
+import com.jiuzhang.url.ratelimit.FixWindowRateLimiter;
 import com.jiuzhang.url.ratelimit.RateLimitProcessor;
 import com.jiuzhang.url.utils.IpUtil;
 import com.jiuzhang.url.vo.RateLimiterInfo;
@@ -57,16 +58,18 @@ public class RateLimitInterceptor {
         RateLimiterInfo rateLimiterInfo = new RateLimiterInfo();
         rateLimiterInfo.setKey(key);
         rateLimiterInfo.setPermitsPerSecond(permitsPerSecond);
-        RateLimiter rateLimiter = rateLimitProcessor.getRateLimiter(rateLimiterInfo); //rateLimitProcessor.getRateLimiter(key, permitsPerSecond);
+        //RateLimiter rateLimiter = rateLimitProcessor.getRateLimiter(rateLimiterInfo); //rateLimitProcessor.getRateLimiter(key, permitsPerSecond);
 
-        if (RateLimitProcessor.isRateLimited(rateLimiter, period, permits)) {
+        FixWindowRateLimiter fixWindowRateLimiter = rateLimitProcessor.getFixWindowRateLimiter();
+
+        //if (RateLimitProcessor.isRateLimited(rateLimiter, period, permits)) {
+        if(fixWindowRateLimiter.isRateLimited(key, permits, period)) {
             logger.info("Access to {} from {} is rate limited", method.getName(), key);
             sendFallback();
             return null;
         }
 
         return pjp.proceed();
-
     }
 
     private String getLimiterKey(HttpServletRequest request, Method method, RateLimit rateLimitAnnotation, LimitType limitType) {
@@ -86,10 +89,11 @@ public class RateLimitInterceptor {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletResponse response = requestAttributes.getResponse();
         response.setContentType("text/html;charset=UTF-8");
+        response.setStatus(429);
         PrintWriter writer = null;
         try {
             writer = response.getWriter();
-            writer.println("Service is busy, please try again later");
+            writer.println("Too Many Requests");
         } catch (IOException e) {
             logger.error("Write fall back failed", e);
         } finally {
