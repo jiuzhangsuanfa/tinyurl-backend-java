@@ -19,15 +19,21 @@ public class RateLimitProcessor {
     private final LocalCacheConfigProperties localCacheConfigProperties;
     private LoadingCache<RateLimiterInfo, RateLimiter> rateLimiterCache;
     private ConcurrentHashMap<String, RateLimiter> rateLimiters;
+    private final FixWindowRateLimiter fixWindowRateLimiter;
 
     @Autowired
-    public RateLimitProcessor(LocalCacheConfigProperties localCacheConfigProperties) {
+    public RateLimitProcessor(LocalCacheConfigProperties localCacheConfigProperties, FixWindowRateLimiter fixWindowRateLimiter) {
         this.localCacheConfigProperties = localCacheConfigProperties;
+        this.fixWindowRateLimiter = fixWindowRateLimiter;
     }
 
     public static boolean isRateLimited(RateLimiter rateLimiter, int period, int permits) {
         boolean tryAcquire = rateLimiter.tryAcquire(permits, period, TimeUnit.SECONDS);
         return !tryAcquire;
+    }
+
+    public static boolean isRateLimited(FixWindowRateLimiter fixWindowRateLimiter, String key, int limit, int period) {
+        return fixWindowRateLimiter.isRateLimited(key, limit, period);
     }
 
     @PostConstruct
@@ -68,4 +74,7 @@ public class RateLimitProcessor {
         return rateLimiter;
     }
 
+    public FixWindowRateLimiter getFixWindowRateLimiter() {
+        return fixWindowRateLimiter;
+    }
 }

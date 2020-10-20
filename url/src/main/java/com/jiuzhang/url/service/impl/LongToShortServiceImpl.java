@@ -60,8 +60,6 @@ public class LongToShortServiceImpl implements LongToShortService {
     redisService.expire(url, 60);
     if (!StringUtils.isEmpty(shortExist)) {
       // 调用一个常量类型 + short （分不同的环境建立不同域名） application配置文件分环境
-      shortExist =
-          StringUtils.startsWithIgnoreCase(shortExist, "/") ? shortExist : "/" + shortExist;
       String fullUrl = shortUrlPrefix + shortExist;
       urlVo.setUrl(fullUrl);
       return urlVo;
