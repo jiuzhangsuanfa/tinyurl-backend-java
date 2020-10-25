@@ -1,7 +1,6 @@
 package com.jiuzhang.url.controller;
 
 import com.jiuzhang.url.service.LongToShortService;
-import com.jiuzhang.url.service.VisitInfoService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +29,6 @@ public class ShortToLongController {
     @Autowired
     private LongToShortService longToShortService;
 
-    @Autowired
-    private VisitInfoService visitInfoService;
-
 
     /**
      * 重定向到原来长网址
@@ -48,7 +44,6 @@ public class ShortToLongController {
         if (longUrl == null) {
             throw new NoSuchElementException("Cannot find long URL mapping to " + shortUrl);
         } else {
-            visitInfoService.setVisitInfo(shortUrl, request);
             response.sendRedirect(longUrl);
         }
     }
