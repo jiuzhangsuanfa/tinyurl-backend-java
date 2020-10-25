@@ -3,6 +3,7 @@ package com.jiuzhang.url.aspect;
 import com.google.common.util.concurrent.RateLimiter;
 import com.jiuzhang.url.annotation.RateLimit;
 import com.jiuzhang.url.enums.LimitType;
+import com.jiuzhang.url.ratelimit.BucketTokenRateLimiter;
 import com.jiuzhang.url.ratelimit.FixWindowRateLimiter;
 import com.jiuzhang.url.ratelimit.RateLimitProcessor;
 import com.jiuzhang.url.utils.IpUtil;
@@ -60,10 +61,13 @@ public class RateLimitInterceptor {
         rateLimiterInfo.setPermitsPerSecond(permitsPerSecond);
         //RateLimiter rateLimiter = rateLimitProcessor.getRateLimiter(rateLimiterInfo); //rateLimitProcessor.getRateLimiter(key, permitsPerSecond);
 
-        FixWindowRateLimiter fixWindowRateLimiter = rateLimitProcessor.getFixWindowRateLimiter();
+        //FixWindowRateLimiter fixWindowRateLimiter = rateLimitProcessor.getFixWindowRateLimiter();
+        BucketTokenRateLimiter bucketTokenRateLimiter = rateLimitProcessor.getBucketTokenRateLimiter();
+
 
         //if (RateLimitProcessor.isRateLimited(rateLimiter, period, permits)) {
-        if(fixWindowRateLimiter.isRateLimited(key, permits, period)) {
+        //if(fixWindowRateLimiter.isRateLimited(key, permits, period)) {
+        if(bucketTokenRateLimiter.isRateLimited(key, permitsPerSecond, permits)) {
             logger.info("Access to {} from {} is rate limited", method.getName(), key);
             sendFallback();
             return null;
