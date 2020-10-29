@@ -10,18 +10,13 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @auther: WZ
- * @Date: 2020/9/9 15:23
- * @Description: 线程池配置
- */
 @Configuration
 @EnableAsync
-@EnableConfigurationProperties(ThreadPoolConfigProperties.class)
-public class MyThreadPoolConfig {
+@EnableConfigurationProperties(ThreadPooProperties.class)
+public class ThreadPoolConfig {
 
     @Bean("threadPoolExecutor")
-    public ThreadPoolExecutor threadPoolExecutor(ThreadPoolConfigProperties pool) {
+    public ThreadPoolExecutor threadPoolExecutor(ThreadPooProperties pool) {
         return new ThreadPoolExecutor(
                 pool.getCoreSize(),
                 pool.getMaxSize(),

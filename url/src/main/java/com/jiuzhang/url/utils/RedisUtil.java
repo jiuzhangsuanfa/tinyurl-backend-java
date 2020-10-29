@@ -6,42 +6,39 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * @auther: WZ
- * @Date: 2020/9/26 12:59
- * @Description:
- */
 @Component
 public class RedisUtil {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+  private RedisTemplate dbCacheRedisTemplate;
 
-    public void setLongAndShort(String longUrl, String shortUrl, long time) {
-        redisTemplate.opsForValue().set(longUrl, shortUrl, time, TimeUnit.MINUTES);
-        redisTemplate.opsForValue().set(shortUrl, longUrl, time, TimeUnit.MINUTES);
-        //redisTemplate.opsForValue().set(shortUrl + "sum", 0, 60, TimeUnit.MINUTES);
+  @Autowired
+  public RedisUtil(RedisTemplate dbCacheRedisTemplate) {
+    this.dbCacheRedisTemplate = dbCacheRedisTemplate;
+  }
+
+  public void setLongAndShort(String longUrl, String shortUrl, long time) {
+    dbCacheRedisTemplate.opsForValue().set(longUrl, shortUrl, time, TimeUnit.MINUTES);
+    dbCacheRedisTemplate.opsForValue().set(shortUrl, longUrl, time, TimeUnit.MINUTES);
+    // redisTemplate.opsForValue().set(shortUrl + "sum", 0, 60, TimeUnit.MINUTES);
+  }
+
+  public void expire(String key, long time) {
+    dbCacheRedisTemplate.expire(key, time, TimeUnit.MINUTES);
+  }
+
+  public void set(String key, String value) {
+    dbCacheRedisTemplate.opsForValue().set(key, value);
+  }
+
+  public void set(String key, String value, long time) {
+    if (time > 0) {
+      dbCacheRedisTemplate.opsForValue().set(key, value, time, TimeUnit.MINUTES);
+    } else {
+      dbCacheRedisTemplate.opsForValue().set(key, value);
     }
+  }
 
-    public void expire(String key, long time) {
-        redisTemplate.expire(key, time, TimeUnit.MINUTES);
-    }
-
-    public void set(String key, String value) {
-        redisTemplate.opsForValue().set(key, value);
-    }
-
-    public void set(String key, String value, long time) {
-        if (time > 0) {
-            redisTemplate.opsForValue().set(key, value, time, TimeUnit.MINUTES);
-        } else {
-            redisTemplate.opsForValue().set(key, value);
-        }
-    }
-
-
-    public Object get(String key) {
-        return key == null ? null : redisTemplate.opsForValue().get(key);
-    }
-
+  public Object get(String key) {
+    return key == null ? null : dbCacheRedisTemplate.opsForValue().get(key);
+  }
 }

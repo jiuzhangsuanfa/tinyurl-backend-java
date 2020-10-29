@@ -4,7 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.util.concurrent.RateLimiter;
-import com.jiuzhang.url.config.LocalCacheConfigProperties;
+import com.jiuzhang.url.config.LocalCacheProperties;
 import com.jiuzhang.url.vo.RateLimiterInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,15 +16,15 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RateLimitProcessor {
 
-    private final LocalCacheConfigProperties localCacheConfigProperties;
+    private final LocalCacheProperties localCacheProperties;
     private LoadingCache<RateLimiterInfo, RateLimiter> rateLimiterCache;
     private ConcurrentHashMap<String, RateLimiter> rateLimiters;
     private final FixWindowRateLimiter fixWindowRateLimiter;
     private final BucketTokenRateLimiter bucketTokenRateLimiter;
 
     @Autowired
-    public RateLimitProcessor(LocalCacheConfigProperties localCacheConfigProperties, FixWindowRateLimiter fixWindowRateLimiter, BucketTokenRateLimiter bucketTokenRateLimiter) {
-        this.localCacheConfigProperties = localCacheConfigProperties;
+    public RateLimitProcessor(LocalCacheProperties localCacheProperties, FixWindowRateLimiter fixWindowRateLimiter, BucketTokenRateLimiter bucketTokenRateLimiter) {
+        this.localCacheProperties = localCacheProperties;
         this.fixWindowRateLimiter = fixWindowRateLimiter;
         this.bucketTokenRateLimiter = bucketTokenRateLimiter;
     }
@@ -47,7 +47,7 @@ public class RateLimitProcessor {
         rateLimiters = new ConcurrentHashMap();
         rateLimiterCache =
                 CacheBuilder.newBuilder()
-                        .expireAfterAccess(localCacheConfigProperties.getKeepAliveTime(), TimeUnit.MINUTES)
+                        .expireAfterAccess(localCacheProperties.getKeepAliveTime(), TimeUnit.MINUTES)
                         .build(new CacheLoader<RateLimiterInfo, RateLimiter>() {
 
                             @Override
