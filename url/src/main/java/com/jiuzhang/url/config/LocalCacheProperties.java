@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "tinyurl.local.cache")
 @Data
-public class LocalCacheConfigProperties {
+public class LocalCacheProperties {
     private Integer keepAliveTime;
 }

@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "tinyurl.thread")
 @Data
-public class ThreadPoolConfigProperties {
+public class ThreadPooProperties {
     private Integer coreSize;
     private Integer maxSize;
     private Integer keepAliveTime;

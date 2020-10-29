@@ -67,7 +67,7 @@ public class RateLimitInterceptor {
 
         //if (RateLimitProcessor.isRateLimited(rateLimiter, period, permits)) {
         //if(fixWindowRateLimiter.isRateLimited(key, permits, period)) {
-        if(bucketTokenRateLimiter.isRateLimited(key, permitsPerSecond, permits)) {
+        if (bucketTokenRateLimiter.isRateLimited(key, permitsPerSecond, permits)) {
             logger.info("Access to {} from {} is rate limited", method.getName(), key);
             sendFallback();
             return null;

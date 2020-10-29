@@ -31,13 +31,13 @@ public class BucketTokenRateLimiter {
     }
 
     @PostConstruct
-    private void getRedisScript(){
+    private void getRedisScript() {
         redisScript = new DefaultRedisScript<>();
         redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("redisLimit.lua")));
         redisScript.setResultType(Number.class);
     }
 
-    public  boolean isRateLimited(String key, double permitsPerSecond, int limit){
+    public boolean isRateLimited(String key, double permitsPerSecond, int limit) {
         List<String> keys = getKeys(key);
 
         Number count = limitRedisTemplate.execute(
@@ -59,7 +59,7 @@ public class BucketTokenRateLimiter {
     }
 
 
-    private static long getCurrentTimeStamp(){
+    private static long getCurrentTimeStamp() {
         Instant instant = Instant.now();
         long timeStampSeconds = instant.getEpochSecond();
 
