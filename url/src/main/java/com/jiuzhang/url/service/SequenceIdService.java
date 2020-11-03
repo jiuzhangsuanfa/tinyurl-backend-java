@@ -1,4 +1,4 @@
-package com.jiuzhang.url.service.impl;
+package com.jiuzhang.url.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -50,6 +50,7 @@ public class SequenceIdService {
   public long getNextSequenceByLua() {
     List<String> keys = Arrays.asList(GLOBAL_SEQUENCE_ID);
     Number count = (Number) sequenceRedisTemplate.execute(redisScript, keys);
+    sequenceRedisTemplate.getConnectionFactory().getConnection().bgSave();
     return count.longValue();
   }
 }
