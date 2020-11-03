@@ -1,6 +1,6 @@
 package com.jiuzhang.url.controller;
 
-import com.jiuzhang.url.service.LongToShortService;
+import com.jiuzhang.url.service.ILongToShortService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class ShortToLongController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortToLongController.class);
 
     @Autowired
-    private LongToShortService longToShortService;
+    private ILongToShortService longToShortService;
 
 
     /**
