@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 /**
- * @auther: WZ
- * @Date: 2020/9/8 15:21
  * @Description: 短网址处理重定向
  */
 @Controller
@@ -40,7 +38,7 @@ public class ShortToLongController {
      */
     @RequestMapping("/{shortUrl}")
     public void redirect(@PathVariable String shortUrl, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String longUrl = longToShortService.shortToLong(shortUrl);
+        String longUrl = longToShortService.shortToLong(shortUrl); //longToShortService.shortToLong(shortUrl, request);
         if (longUrl == null) {
             throw new NoSuchElementException("Cannot find long URL mapping to " + shortUrl);
         } else {

@@ -15,5 +15,7 @@ public interface ILongToShortService {
 
     UrlVO longToShort(String longUrl);
 
+    String shortToLong(String shortUrl, HttpServletRequest request);
+
     String shortToLong(String shortUrl);
 }
