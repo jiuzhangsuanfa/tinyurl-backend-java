@@ -231,20 +231,21 @@ public class LongToShortService implements ILongToShortService {
    * @return
    */
   @Override
+  public String shortToLong(String shortUrl, HttpServletRequest request) {
+    String longUrl = fetchLongUrl(shortUrl);
+    return longUrl;
+  }
+
+  @Override
   public String shortToLong(String shortUrl) {
     String longUrl = null;
-    if (NumberUtils.isDigits(shortUrl)) {
-      Long sequenceId = tinyUrlGenerator.convertTinyUrlToId(shortUrl);
-      longUrl = fetchLongUrl(sequenceId);
-    }
-    else {
-      longUrl = fetchLongUrl(shortUrl);
-    }
+    Long sequenceId = tinyUrlGenerator.convertTinyUrlToId(shortUrl);
+    longUrl = fetchLongUrl(sequenceId);
 
     return longUrl;
   }
 
-  private String fetchLongUrl(String shortUrl){
+  private String fetchLongUrl(String shortUrl) {
     String longUrl = (String) redisService.get(shortUrl);
     redisService.expire(shortUrl, 60);
     if (!StringUtils.isEmpty(longUrl)) {
@@ -263,7 +264,7 @@ public class LongToShortService implements ILongToShortService {
     return longUrl;
   }
 
-  private String fetchLongUrl(Long sequenceId ){
+  private String fetchLongUrl(Long sequenceId) {
     String longUrl = (String) redisService.get(sequenceId.toString());
     redisService.expire(sequenceId.toString(), 60);
     if (!StringUtils.isEmpty(longUrl)) {
@@ -271,7 +272,7 @@ public class LongToShortService implements ILongToShortService {
     }
 
     Optional<LongToSequenceId> longToSequenceIdOpt =
-            longToSequenceIdRepository.findBySequenceId(sequenceId);
+        longToSequenceIdRepository.findBySequenceId(sequenceId);
 
     if (longToSequenceIdOpt.isPresent()) {
       longUrl = longToSequenceIdOpt.get().getLongUrl();
@@ -282,5 +283,4 @@ public class LongToShortService implements ILongToShortService {
 
     return longUrl;
   }
-
 }
