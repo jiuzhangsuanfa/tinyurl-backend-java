@@ -1,5 +1,6 @@
 package com.jiuzhang.url.service;
 
+import com.jiuzhang.url.sharding.RedisKeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,15 +20,18 @@ public class SequenceIdService {
 
   private static final String GLOBAL_SEQUENCE_ID = "Global_Sequence_ID";
 
-  private RedisTemplate sequenceRedisTemplate;
+  private final RedisTemplate sequenceRedisTemplate;
+
+  private final RedisKeyGenerator redisKeyGenerator;
 
   private RedisAtomicLong entityIdCounter;
 
   private DefaultRedisScript<Number> redisScript;
 
   @Autowired
-  public SequenceIdService(RedisTemplate sequenceRedisTemplate) {
+  public SequenceIdService(RedisTemplate sequenceRedisTemplate, RedisKeyGenerator redisKeyGenerator) {
     this.sequenceRedisTemplate = sequenceRedisTemplate;
+    this.redisKeyGenerator = redisKeyGenerator;
   }
 
   @PostConstruct
@@ -53,4 +57,10 @@ public class SequenceIdService {
     sequenceRedisTemplate.getConnectionFactory().getConnection().bgSave();
     return count.longValue();
   }
+
+  public long getNextSequenceByKeyGenerator() {
+    Number count = this.redisKeyGenerator.generateKey();
+    return count.longValue();
+  }
+
 }

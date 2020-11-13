@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisService {
 
-    private RedisTemplate dbCacheRedisTemplate;
+    private final RedisTemplate dbCacheRedisTemplate;
 
     @Autowired
     public RedisService(RedisTemplate dbCacheRedisTemplate) {
