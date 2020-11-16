@@ -111,7 +111,7 @@ public class LongToShortService implements ILongToShortService {
       return postProcessDataFromDB(longToSequenceIdOpt.get());
     }
 
-    Long nextGlobalSequenceId = sequenceIdService.getNextSequenceByAtomic();
+    Long nextGlobalSequenceId = sequenceIdService.getNextSequenceByKeyGenerator();
     UrlVO urlVO = convertSequenceIdToShortKey(nextGlobalSequenceId);
 
     redisService.setLongAndShort(longUrl, nextGlobalSequenceId.toString(), DEFAULT_CACHE_TTL);
