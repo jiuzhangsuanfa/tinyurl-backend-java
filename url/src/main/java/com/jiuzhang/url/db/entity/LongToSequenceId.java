@@ -1,4 +1,4 @@
-package com.jiuzhang.url.domain;
+package com.jiuzhang.url.db.entity;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
