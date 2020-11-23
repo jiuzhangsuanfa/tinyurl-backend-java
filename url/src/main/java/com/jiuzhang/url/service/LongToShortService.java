@@ -1,9 +1,9 @@
 package com.jiuzhang.url.service;
 
-import com.jiuzhang.url.domain.LongToSequenceId;
-import com.jiuzhang.url.domain.LongToShort;
-import com.jiuzhang.url.repo.LongToSequenceIdRepository;
-import com.jiuzhang.url.repo.LongToShortRepository;
+import com.jiuzhang.url.db.entity.LongToSequenceId;
+import com.jiuzhang.url.db.entity.LongToShort;
+import com.jiuzhang.url.db.repository.LongToSequenceIdRepository;
+import com.jiuzhang.url.db.repository.LongToShortRepository;
 import com.jiuzhang.url.tinyurl.TinyUrlGenerator;
 import com.jiuzhang.url.utils.UrlUtil;
 import com.jiuzhang.url.vo.UrlVO;
