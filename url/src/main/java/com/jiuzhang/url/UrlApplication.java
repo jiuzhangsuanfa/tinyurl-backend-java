@@ -1,9 +1,11 @@
 package com.jiuzhang.url;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(exclude= FlywayAutoConfiguration.class)
 public class UrlApplication {
 
     public static void main(String[] args) {
