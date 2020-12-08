@@ -9,15 +9,15 @@ import java.io.Serializable;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "LongToSequenceId", description = "")
+@ApiModel(value = "ShortToLong", description = "")
 @Entity
-@Table(name = "LONG_TO_SEQUENCE_ID")
-public class LongToSequenceId implements Serializable {
+@Table(name = "SHORT_TO_LONG")
+public class ShortToLong implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String longUrl;
+    private String shortUrl;
 
-    private Long sequenceId;
+    private String longUrl;
 }
